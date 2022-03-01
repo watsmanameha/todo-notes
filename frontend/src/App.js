@@ -3,6 +3,8 @@ import './App.css';
 import UserList from "./components/User";
 import axios from "axios";
 import Footer from "./components/Footer";
+import MenuApp from "./components/Menu";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -27,8 +29,9 @@ class App extends React.Component {
   render() {
     return (
         <div>
-          <UserList users={this.state.users}/>
-          <Footer/>
+            <UserList users={this.state.users}/>
+            <Footer/>
+            <MenuApp/>
         </div>
     )
   }
