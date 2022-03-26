@@ -4,14 +4,14 @@ from .models import Project, Todo
 
 
 class ProjectModelSerializer(serializers.HyperlinkedModelSerializer):
-    #users = serializers.StringRelatedField(many=True)
+    # users = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Project
-        fields = '__all__'
+        fields = "__all__"
 
 
 class TodoModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = '__all__'
+        fields = "__all__"
