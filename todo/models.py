@@ -1,4 +1,5 @@
 from django.db import models
+
 from users.models import User
 
 
@@ -11,7 +12,7 @@ class Project(models.Model):
 class Todo(models.Model):
     project = models.OneToOneField(Project, on_delete=models.CASCADE)
     text = models.TextField()
-    created_at = models.DateField(auto_now=False, auto_now_add=True)
+    created_at = models.DateField(auto_now=False, auto_now_add=False)
     updated_at = models.DateField()
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_active = models.BooleanField()
