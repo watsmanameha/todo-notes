@@ -3,9 +3,7 @@ from rest_framework import serializers
 from .models import Project, Todo
 
 
-class ProjectModelSerializer(serializers.HyperlinkedModelSerializer):
-    # users = serializers.StringRelatedField(many=True)
-
+class ProjectModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = "__all__"
@@ -14,4 +12,4 @@ class ProjectModelSerializer(serializers.HyperlinkedModelSerializer):
 class TodoModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = "__all__"
+        exclude = ('is_active',)
