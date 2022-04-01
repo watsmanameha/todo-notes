@@ -24,7 +24,7 @@ const TodoList = ({todos}) => {
             <th>Last Update</th>
             <th>User</th>
             <th>Activity</th>
-            {todos.map((todos) => <TodoItem todo={todo}/>)}
+            {todos.map((todo) => <TodoItem todo={todo}/>)}
         </table>
     )
 }
