@@ -4,6 +4,7 @@ import UserList from "./components/User.js";
 import axios from "axios";
 import Footer from "./components/Footer.js";
 import ProjectList from "./components/Project.js"
+import TodoList from "./components/Todo.js"
 
 
 class App extends React.Component {
@@ -11,13 +12,15 @@ class App extends React.Component {
     super(props)
     this.state = {
       'users' : [],
-      'projects' : []
+      'projects' : [],
+      'todos': []
     }
   }
 
   componentDidMount() {
     axios.get('http://127.0.0.1:8000/api/users/',
-    'http://127.0.0.1:8000/api/projects/')
+    'http://127.0.0.1:8000/api/projects/',
+    'http://127.0.0.1:8000/api/todos/')
         .then(response => {
           const users = response.data
             this.setState(
@@ -30,6 +33,11 @@ class App extends React.Component {
                 {
                     'projects' : projects
                 })
+          const todos = response.data
+            this.setState(
+                {
+                    'todos' : todos
+                })
         }).catch(error => console.log(error))
   }
 
@@ -38,6 +46,7 @@ class App extends React.Component {
         <div>
             <UserList users={this.state.users}/>
             <ProjectList projects={this.state.projects}/>
+            <TodoList todos={this.state.todos}/>
             <Footer/>
         </div>
     )
