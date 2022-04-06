@@ -19,3 +19,6 @@ class Todo(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.project
