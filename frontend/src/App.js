@@ -19,6 +19,7 @@ const get_url = (url) => `${DOMAIN}${url}`
 
 
 class App extends React.Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -42,7 +43,6 @@ class App extends React.Component {
                 console.log(response.data)
                 this.setState({project: response.data})
             }).catch(error => console.log(error))
-    }
 
     componentDidMount() {
         axios.get(get_url('users/'))
@@ -94,7 +94,6 @@ class App extends React.Component {
 
         )
     }
-}
 
 
 export default App;
