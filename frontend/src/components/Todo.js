@@ -17,13 +17,15 @@ const TodoItem = ({todo}) => {
 
 const TodoList = ({todos}) => {
     return (
-        <table>
-            <th>Project</th>
-            <th>Text</th>
-            <th>Created At</th>
-            <th>Last Update</th>
-            <th>User</th>
-            <th>Activity</th>
+        <table className="table">
+            <tr>
+                <th>Project</th>
+                <th>Text</th>
+                <th>Created At</th>
+                <th>Last Update</th>
+                <th>User</th>
+                <th>Activity</th>
+            </tr>
             {todos.map((todo) => <TodoItem todo={todo}/>)}
         </table>
     )
