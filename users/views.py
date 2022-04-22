@@ -1,14 +1,17 @@
-from rest_framework import viewsets, mixins
-
+from rest_framework import mixins, viewsets
+from rest_framework.viewsets import ModelViewSet
+from .serializers import UserSerializer, UserSerializerFull
 from .models import User
-from .serializers import UserModelSerializer
-from rest_framework.permissions import IsAdminUser
 
 
-class UserModelViewSet(mixins.ListModelMixin,
-                       mixins.RetrieveModelMixin,
-                       mixins.UpdateModelMixin,
-                       viewsets.GenericViewSet):
-    serializer_class = UserModelSerializer
+class UserViewSet(mixins.ListModelMixin,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  viewsets.GenericViewSet):
+    serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = [IsAdminUser]
+
+    def get_serializer_class(self):
+        if self.request.version == '0.2':
+            return UserSerializerFull
+        return UserSerializer

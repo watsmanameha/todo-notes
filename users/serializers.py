@@ -1,18 +1,14 @@
-from rest_framework.serializers import ModelSerializer, PrimaryKeyRelatedField
-
+from rest_framework.serializers import ModelSerializer
 from .models import User
 
 
-class UserModelSerializer(ModelSerializer):
-    # id = PrimaryKeyRelatedField(
-    #     queryset=User.objects.all(),
-    #     allow_null=True,
-    #     default=None
-    # )
-
-    # def validate_user(self, value):
-    #     return self.context['request'].user
-
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "firstname", "lastname", "email"]
+        fields = ('username', "first_name", 'last_name', 'email')
+
+
+class UserSerializerFull(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username', "first_name", 'last_name', 'email', 'is_staff', 'is_superuser')
