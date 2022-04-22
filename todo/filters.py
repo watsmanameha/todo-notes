@@ -3,8 +3,8 @@ from .models import Todo
 
 
 class TodoFilter(filters.FilterSet):
-    project = filters.CharFilter(lookup_expr='contains')
+    create = filters.CharFilter(lookup_expr='contains')
 
     class Meta:
         model = Todo
-        fields = ['project']
+        fields = ['project', 'create']

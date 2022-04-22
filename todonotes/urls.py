@@ -7,13 +7,13 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 
-from todo.views import TodoModelViewSet, ProjectModelViewSet
-from users.views import UserModelViewSet
+from todo.views import TodoViewSet, ProjectViewSet
+from users.views import UserViewSet
 
 router = DefaultRouter()
-router.register('users', UserModelViewSet)
-router.register('todos', TodoModelViewSet)
-router.register('projects', ProjectModelViewSet)
+router.register('users', UserViewSet)
+router.register('todos', TodoViewSet)
+router.register('projects', ProjectViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
 ]

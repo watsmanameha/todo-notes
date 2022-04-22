@@ -1,27 +1,22 @@
-from rest_framework.pagination import LimitOffsetPagination
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from .models import Project, Todo
-from .serializers import ProjectModelSerializer, TodoModelSerializer
+
 from .filters import TodoFilter
-from rest_framework.permissions import IsAdminUser, BasePermission
-from users.models import User
+from .serializers import ProjectSerializer, TodoSerializer
+from .models import Project, Todo
 
 
-class StaffOnly(BasePermission):
-    def has_permission(self, request, view):
-        return request.user.is_staff
+class ProjectPagination(PageNumberPagination):
+    page_size = 10
 
 
-class ProjectModelViewSetPagination(LimitOffsetPagination):
-    default_limit = 10
-
-
-class ProjectModelViewSet(ModelViewSet):
+class ProjectViewSet(ModelViewSet):
+    serializer_class = ProjectSerializer
     queryset = Project.objects.all()
-    serializer_class = ProjectModelSerializer
-    pagination_class = ProjectModelViewSetPagination
-    permission_classes = [IsAdminUser, StaffOnly]
-
+    # pagination_class = ProjectPagination
 
     def get_queryset(self):
         queryset = Project.objects.all()
@@ -31,19 +26,23 @@ class ProjectModelViewSet(ModelViewSet):
         return queryset
 
 
-class TodoModelViewSetPagination(LimitOffsetPagination):
-    default_limit = 20
+class ToDoPagination(PageNumberPagination):
+    page_size = 20
 
 
-class TodoModelViewSet(ModelViewSet):
+class TodoViewSet(ModelViewSet):
+    serializer_class = TodoSerializer
     queryset = Todo.objects.all()
-    serializer_class = TodoModelSerializer
-    permission_classes = [IsAdminUser, StaffOnly]
+    # pagination_class = ToDoPagination
+    # filter_backends = [DjangoFilterBackend]
+    filterset_class = TodoFilter
 
-
-class TodoModelFilterViewSet(ModelViewSet):
-    queryset = Todo.objects.all()
-    serializer_class = TodoModelSerializer
-    filterset_fields = TodoFilter
-
-
+    def destroy(self, request, *args, **kwargs):
+        try:
+            instance = self.get_object()
+            instance.is_active = False
+            instance.save()
+        except:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
